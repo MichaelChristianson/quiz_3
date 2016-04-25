@@ -1,0 +1,31 @@
+<h2>All Ideas</h2>
+
+<ol>
+  <% @ideas.each do |idea| %>
+  <li>
+    <h3><%= link_to idea.title, idea_path(idea) %></h3>
+    <p><%= idea.description %></p>
+    <p><%= "By #{idea.user.name}" %></p>
+
+    <%# LIKES %>
+    <% like = Like.find_by_user_id_and_idea_id(current_user, idea) %>
+    <% if like.present? %>
+      <%= button_to 'Unlike', user_idea_likes_path(current_user.id, idea.id, like: {user_id: current_user.id, idea: idea.id}), method: :delete %>
+    <% else %>
+      <%= button_to 'Like', user_idea_likes_path(current_user.id, idea.id, like: {user_id: current_user.id, idea: idea.id}), method: :post %>
+    <% end %>
+
+    <%# MEMBERS %>
+    <% if idea.users.include? current_user %>
+      <%#= button_to 'Joined', user_idea_path %>
+    <% else %>
+      <%= button_to 'Join', user_idea_path(current_user, idea) %>
+    <% end %>
+
+    <p>Likes: <%= idea.likes.count %></p>
+    <p>Members: <%= idea.users.count %></p>
+    <hr>
+  </li>
+  <% end %>
+
+</ol>

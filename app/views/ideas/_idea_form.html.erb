@@ -1,0 +1,17 @@
+
+<%= form_for [current_user, @idea] do |f| %>
+
+  <div>
+    <%= f.label :title %><br>
+    <%= f.text_field :title, size: 75 %>
+  </div>
+
+  <div>
+    <%= f.text_area :description, size: '80x24' %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+
+<% end %>
